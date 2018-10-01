@@ -14,13 +14,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
-      },
-      {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules)/,
         use: {
@@ -68,7 +61,7 @@ module.exports = {
     noInfo: true,
     overlay: true,
     port: 5000,
-    host: '0.0.0.0'
+    host: 'localhost'
   },
   performance: {
     hints: false
