@@ -1,16 +1,16 @@
 const path = require('path')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const HtmlWebPackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const htmlWebpackPlugin = new HtmlWebpackPlugin({
+    template: path.join(__dirname, "public/index.html"),
+    filename: "./index.html"
+})
 
 module.exports = {
-  entry: {
-    'index': path.resolve(__dirname, './src/index.js')
-  },
-  output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: 'build.js'
-  },
+    entry: path.join(__dirname, "public/index.js"),
+    output: {
+        path: path.join(__dirname, "public/dist"),
+        filename: "bundle.js"
+    },
   module: {
     rules: [
       {
@@ -19,7 +19,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env', 'react', 'stage-2']
+            presets: ['@babel/preset-env', '@babel/preset-react']
           }
         }
       },
@@ -44,13 +44,8 @@ module.exports = {
       { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader' }
     ]
   },
-  plugins: [
-    new HtmlWebPackPlugin({
-      filename: './index.html'
-    }),
-    new CleanWebpackPlugin(['dist'], { root: __dirname })
-  ],
-  resolve: {
+    plugins: [htmlWebpackPlugin],
+    resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
     },
