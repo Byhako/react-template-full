@@ -2,32 +2,30 @@ export default { admin }
 
 const baseUrl = 'http://localhost:3000'
 
+const debug = (tag, format, text='') => console.log(tag, format, text)
+const handleResponse = (response) => {
+  return response.json().then(json => {
+    return response.ok ? json : Promise.reject(json)
+  })
+}
+
 function admin (admin) {
-  console.log("%cADMIN", "color: #3465A4; font-weight: bold;" )
+  debug("%cADMIN", "color: #3465A4; font-weight: bold;" )
   return function (dispatch) {
-    const url = `${baseUrl}/admin/login`
-    const body = {
-      user: admin.user,
-      password: admin.password
-    }
+    const url = `${baseUrl}/admin`
+    const body = { ...admin }
     const miInit = {
-      method: 'POST',
+      method: 'POST', mode: 'cors',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-      mode: 'cors'
+      body: JSON.stringify(body)
     }
     return fetch(url, miInit)
-      .then(response => {
-        if (response.ok) {
-          console.log('Request admin ok')
-          return response.json()
-        } else { console.log('Error in request admin:', response) }
-      })
+      .then(handleResponse)
       .then(data => {
-        console.log(data)
+          dispatch({ type: 'SET_ADMIN', admin: data })
       })
       .catch(err => {
-        console.log('%cError in response admin:', "color: #CC0000;", err)
+        debug('%cError in response admin:', "color: #CC0000;", err)
       })
   }
 }
