@@ -1,16 +1,19 @@
 const path = require('path')
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
-    template: path.join(__dirname, "public/index.html"),
-    filename: "./index.html"
+  template: path.join(__dirname, "public/index.html"),
+  filename: "./index.html",
+  favicon: "./public/favicon.ico"
 })
 
 module.exports = {
-    entry: path.join(__dirname, "public/index.js"),
-    output: {
-        path: path.join(__dirname, "public/dist"),
-        filename: "bundle.js"
-    },
+  entry: ['@babel/polyfill', './src/index.js'],
+  // entry: path.join(__dirname, "public/index.js"),
+  output: {
+    path: path.resolve(__dirname, 'build'),
+    filename: "bundle.js",
+    publicPath: '/'
+  },
   module: {
     rules: [
       {
@@ -19,7 +22,9 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
+            presets: ['@babel/preset-env',
+                      '@babel/react',{
+                      'plugins': ['@babel/plugin-proposal-class-properties']}]
           }
         }
       },
@@ -44,7 +49,8 @@ module.exports = {
       { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader' }
     ]
   },
-    plugins: [htmlWebpackPlugin],
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  plugins: [htmlWebpackPlugin],
     resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
