@@ -11,6 +11,7 @@ class AppRouter extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact path='/' component={Home} />
+          <Route render={() => <p>Not Found</p>} />
         </Switch>
       </BrowserRouter>
     )
