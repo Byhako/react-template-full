@@ -1,5 +1,5 @@
-import {applyMiddleware, createStore} from 'redux'
-import {createLogger} from 'redux-logger'
+import { applyMiddleware, createStore } from 'redux'
+import { createLogger } from 'redux-logger'
 import ReduxThunk from 'redux-thunk'
 import Reducer from '../reducers/Reducer'
 import { composeWithDevTools } from 'redux-devtools-extension'
@@ -8,8 +8,7 @@ const logger = createLogger()
 const middleware = [ReduxThunk, logger]
 
 export const initialState = {
-  token: null,
-  userId: null,
+  variable: 0
 }
 
 const store = createStore(
