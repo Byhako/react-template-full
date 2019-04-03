@@ -16,7 +16,7 @@ const handleResponse = (response) => {
 // la funcion Setsumar
 function admin (admin) {
   debug("%cADMIN", "color: #3465A4; font-weight: bold;" )
-  return function (dispatch) {
+  return dispatch => {
     const url = `${baseUrl}/admin`
     const body = { ...admin }
     const miInit = {
@@ -24,7 +24,7 @@ function admin (admin) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
     }
-    fetch(url, miInit)
+    return fetch(url, miInit)
       .then(handleResponse)
       .then(data => {
           dispatch({ type: 'SET_ADMIN', admin: data })
